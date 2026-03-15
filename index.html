@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ent Soft Bots — Enterprise Software Robots. Autonomous AI agents that replace repetitive enterprise workflows with intelligent software robots." />
+  <title>Ent Soft Bots</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Custom Properties ─────────────────────────────────── */
+    :root {
+      --bg:      #0a0a0a;
+      --bg-2:    #111111;
+      --bg-3:    #161616;
+      --text:    #e5e5e5;
+      --muted:   #888888;
+      --accent:  #4ade80;
+      --border:  #222222;
+      --mono:    'IBM Plex Mono', monospace;
+      --sans:    'Inter', sans-serif;
+      --max-w:   1100px;
+    }
+
+    /* ── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    a:hover { color: var(--accent); }
+
+    /* ── Layout Helpers ────────────────────────────────────── */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 clamp(1.25rem, 5vw, 2.5rem);
+    }
+
+    section {
+      padding: clamp(4rem, 8vw, 7rem) 0;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    /* ── Nav ───────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--text);
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── Hero ──────────────────────────────────────────────── */
+    #hero {
+      padding-top: calc(56px + clamp(5rem, 10vw, 9rem));
+      padding-bottom: clamp(5rem, 10vw, 9rem);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-heading {
+      font-family: var(--mono);
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-shadow: 0 0 60px rgba(74, 222, 128, 0.08);
+      margin-bottom: 2rem;
+    }
+
+    .hero-heading em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-family: var(--sans);
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.75;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.4rem;
+      border: 1px solid var(--border);
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0a0a0a;
+      border-color: var(--accent);
+    }
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--muted);
+    }
+    .btn-secondary:hover {
+      color: var(--text);
+      border-color: var(--text);
+    }
+
+    /* ── Mission / About ───────────────────────────────────── */
+    #mission {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: start;
+    }
+
+    @media (max-width: 700px) {
+      .mission-grid { grid-template-columns: 1fr; }
+    }
+
+    .mission-text p {
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .capability-list {
+      list-style: none;
+      counter-reset: cap;
+    }
+
+    .capability-list li {
+      counter-increment: cap;
+      display: flex;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    .capability-list li:first-child { border-top: 1px solid var(--border); }
+
+    .capability-list li::before {
+      content: "0" counter(cap);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--accent);
+      min-width: 2.2rem;
+      padding-top: 0.1rem;
+    }
+
+    /* ── Products / Services ───────────────────────────────── */
+    #products {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .products-header {
+      margin-bottom: 3rem;
+    }
+
+    .products-heading {
+      font-family: var(--mono);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-top: 0.5rem;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      border: 1px solid var(--border);
+    }
+
+    .product-card {
+      background: var(--bg-2);
+      padding: 1.75rem;
+      transition: background 0.15s ease;
+    }
+
+    .product-card:hover {
+      background: var(--bg-3);
+    }
+
+    .product-card-title {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin-bottom: 0.65rem;
+    }
+
+    .product-card-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(74, 222, 128, 0.25);
+      padding: 0.15rem 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .product-card-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Team ──────────────────────────────────────────────── */
+    #team {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .team-intro {
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 3rem;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0;
+      border: 1px solid var(--border);
+    }
+
+    .team-member {
+      padding: 1.5rem 1.75rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s ease;
+    }
+
+    .team-member:hover { background: var(--bg-2); }
+
+    .team-name {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .team-title {
+      font-size: 0.775rem;
+      color: var(--muted);
+    }
+
+    /* ── Footer ────────────────────────────────────────────── */
+    footer {
+      padding: 3rem 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--border);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Divider ───────────────────────────────────────────── */
+    .dot-divider {
+      display: inline-block;
+      color: var(--border);
+      margin: 0 0.4rem;
+    }
+
+    /* ── Responsive ────────────────────────────────────────── */
+    @media (max-width: 540px) {
+      .nav-links { display: none; }
+      .hero-cta { flex-direction: column; }
+      .footer-links { flex-direction: column; gap: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ───────────────────────────────────────── -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo">Ent Soft <span>Bots</span></a>
+      <ul class="nav-links">
+        <li><a href="mailto:contact@entsoftbots.ai">contact@entsoftbots.ai</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── Hero ─────────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="container">
+      <p class="hero-eyebrow">Enterprise Software Robots</p>
+      <h1 class="hero-heading">
+        Enterprise Software.<br />
+        <em>Automated.</em>
+      </h1>
+      <p class="hero-sub">
+        Ent Soft Bots builds autonomous AI agents that think,
+        plan, and act — replacing repetitive enterprise workflows
+        with intelligent software robots.
+      </p>
+      <div class="hero-cta">
+        <a href="mailto:contact@entsoftbots.ai" class="btn btn-primary">Get in touch</a>
+        <a href="#products" class="btn btn-secondary">Our work →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Mission / About ──────────────────────────────────── -->
+  <section id="mission">
+    <div class="container">
+      <p class="section-label">Mission</p>
+      <div class="mission-grid">
+        <div class="mission-text">
+          <p>
+            We believe the next wave of enterprise productivity comes not from
+            better dashboards or faster SaaS tools, but from software that can
+            reason about your business and act on its own.
+          </p>
+          <p>
+            Ent Soft Bots is building a new class of AI agents — purpose-built
+            for enterprise environments — that understand context, navigate
+            complex systems, and execute multi-step workflows without human
+            supervision.
+          </p>
+          <p>
+            Our robots operate inside the security boundaries your organization
+            already trusts, integrating natively with the tools your teams use
+            every day.
+          </p>
+        </div>
+        <div>
+          <ul class="capability-list">
+            <li>Understand enterprise processes end-to-end</li>
+            <li>Reason and plan autonomously across systems</li>
+            <li>Execute across APIs, databases, and SaaS tools</li>
+            <li>Learn and improve from every interaction</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Products / Services ──────────────────────────────── -->
+  <section id="products">
+    <div class="container">
+      <div class="products-header">
+        <p class="section-label">Products &amp; Services</p>
+        <h2 class="products-heading">What we build</h2>
+      </div>
+      <div class="products-grid">
+
+        <div class="product-card">
+          <div class="product-card-tag">Automation</div>
+          <div class="product-card-title">Process Automation</div>
+          <p class="product-card-desc">
+            End-to-end workflow automation across departments — from
+            procurement approvals to onboarding sequences, without touching
+            legacy code.
+          </p>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-tag">Intelligence</div>
+          <div class="product-card-title">Document Intelligence</div>
+          <p class="product-card-desc">
+            Extract, classify, and act on unstructured documents at scale.
+            Contracts, invoices, reports — understood and processed automatically.
+          </p>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-tag">Integration</div>
+          <div class="product-card-title">Enterprise Integrations</div>
+          <p class="product-card-desc">
+            Connect and orchestrate your SaaS stack. Our agents speak the
+            language of Salesforce, SAP, Workday, ServiceNow, and hundreds more.
+          </p>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-tag">Compliance</div>
+          <div class="product-card-title">Audit &amp; Compliance</div>
+          <p class="product-card-desc">
+            Automated audit trails, policy enforcement, and compliance reporting
+            — always on, always accurate, ready for any regulator.
+          </p>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-tag">Workforce</div>
+          <div class="product-card-title">AI Workforce</div>
+          <p class="product-card-desc">
+            Deploy coordinated teams of software robots that collaborate on
+            complex multi-step tasks, reporting to each other and to you.
+          </p>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-tag">Custom</div>
+          <div class="product-card-title">Custom Agents</div>
+          <p class="product-card-desc">
+            Bespoke agent development for unique workflows. We design, build,
+            and deploy agents tailored to your organization's specific needs.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Team ─────────────────────────────────────────────── -->
+  <section id="team">
+    <div class="container">
+      <p class="section-label">Team</p>
+      <p class="team-intro">
+        Built by engineers and researchers who have shipped AI systems at scale
+        across enterprise, infrastructure, and applied research.
+      </p>
+      <div class="team-grid">
+
+        <div class="team-member">
+          <div class="team-name">Mira Okafor</div>
+          <div class="team-title">Co-founder &amp; CEO</div>
+        </div>
+
+        <div class="team-member">
+          <div class="team-name">Daniel Reyes</div>
+          <div class="team-title">Co-founder &amp; CTO</div>
+        </div>
+
+        <div class="team-member">
+          <div class="team-name">Anika Svensson</div>
+          <div class="team-title">Head of Research</div>
+        </div>
+
+        <div class="team-member">
+          <div class="team-name">James Thorn</div>
+          <div class="team-title">Advisor, Enterprise</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ───────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a href="mailto:contact@entsoftbots.ai">contact@entsoftbots.ai</a>
+          <a href="#">Careers</a>
+          <a href="#">Press</a>
+        </div>
+        <p class="footer-copy">Enterprise Software Robots &copy; 2026</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
