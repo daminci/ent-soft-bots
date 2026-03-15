@@ -46,11 +46,21 @@ Preview: open `index.html` in any browser — no server needed.
 
 Deploy: the file is fully static; it can be hosted on GitHub Pages, Netlify, Vercel, or any static host with zero configuration.
 
-Git workflow:
+## Git Discipline
+
+**Commit and push after every meaningful change.** Do not batch unrelated edits into one commit. Each commit should represent one logical unit of work so the history is easy to read and revert.
+
+Commit message format:
+- Use a short imperative subject line (e.g. `fix: correct hero heading color`, `feat: add pricing section`)
+- Use a type prefix: `feat:`, `fix:`, `style:`, `content:`, or `docs:`
+- Add a brief body if the change needs context
+
 ```bash
-git add index.html
-git commit -m "short description of change"
+git add index.html          # or CLAUDE.md, etc.
+git commit -m "type: short description of what and why"
 git push
 ```
+
+Always push immediately after committing so GitHub stays in sync and changes are never lost locally only.
 
 Remote: `https://github.com/daminci/ent-soft-bots`
